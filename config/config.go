@@ -11,6 +11,7 @@ type Config struct {
 		BaseURL string
 		Port    string
 		URL     string
+		Env		string
 	}
 	Mongo struct {
 		Host string
@@ -37,6 +38,7 @@ func initConfig() *Config {
 		config.App.BaseURL = "localhost"
 		config.App.Port = "8000"
 		config.App.URL = "localhost:8000"
+		config.App.Env = "production"
 
 		config.Mongo.Host = "localhost:8000"
 		config.Mongo.Port = "8000"
@@ -47,6 +49,7 @@ func initConfig() *Config {
 	config.App.BaseURL = os.Getenv("APP_BASE_URL")
 	config.App.Port = os.Getenv("APP_PORT")
 	config.App.URL = os.Getenv("APP_URL")
+	config.App.Env = os.Getenv("APP_ENV")
 	config.Mongo.Host = os.Getenv("MONGO_HOST")
 	config.Mongo.Port = os.Getenv("MONGO_PORT")
 	config.Mongo.User = os.Getenv("MONGO_USER")
