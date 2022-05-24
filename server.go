@@ -1,17 +1,25 @@
 package main
 
 import (
-	"github.com/labstack/echo/v4"
-	"github.com/wildanie12/go-microservice/product-service/config"
+	"context"
+
+	_config "github.com/wildanie12/go-microservice/product-service/config"
+	_utils "github.com/wildanie12/go-microservice/product-service/utils"
+	"go.mongodb.org/mongo-driver/mongo/readpref"
 )
 
 func main() {
 
-	config := config.New()
+	config := _config.New()
 
 
-	e := echo.New()
-	
+	client := _utils.NewMongoConnection(config)
 
-	e.Logger.Fatal(e.Start(":" + config.App.Port))
+	err := client.Ping(context.TODO(), readpref.Primary())
+	if err != nil {
+		panic(err)
+	}
+
+	// e := echo.New()
+	// e.Logger.Fatal(e.Start(":" + config.App.Port))
 }
