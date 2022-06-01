@@ -1,25 +1,26 @@
 package main
 
 import (
-	"context"
-
+	"github.com/labstack/echo/v4"
 	_config "github.com/wildanie12/go-microservice/product-service/config"
+	"github.com/wildanie12/go-microservice/product-service/deliveries/handlers"
+	_route "github.com/wildanie12/go-microservice/product-service/deliveries/route"
+	_productRepository "github.com/wildanie12/go-microservice/product-service/repositories/product"
+	_productService "github.com/wildanie12/go-microservice/product-service/services/product"
 	_utils "github.com/wildanie12/go-microservice/product-service/utils"
-	"go.mongodb.org/mongo-driver/mongo/readpref"
 )
 
 func main() {
 
 	config := _config.New()
+	mongodb := _utils.NewMongoConnection(config)
 
+	productRepository := _productRepository.NewMongo(mongodb)
+	productService := _productService.New(productRepository)
+	productHandler := handlers.NewProductHandler(productService)
 
-	client := _utils.NewMongoConnection(config)
+	e := echo.New()
+	_route.RegisterProductRoutes(e, productHandler)
 
-	err := client.Ping(context.TODO(), readpref.Primary())
-	if err != nil {
-		panic(err)
-	}
-
-	// e := echo.New()
-	// e.Logger.Fatal(e.Start(":" + config.App.Port))
+	e.Logger.Fatal(e.Start(":" + config.App.Port))
 }
