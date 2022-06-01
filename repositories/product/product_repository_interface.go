@@ -6,7 +6,7 @@ type ProductRepositoryInterface interface {
 
 	// FindAll returns product resources in an array of entity struct
 	// based on a given filter and sort query parameter 
-	FindAll() ([]_domain.Product, error)
+	FindAll(filters []map[string]string) ([]_domain.Product, error)
 
 	// Insert will insert the given product parameter to data source
 	// an error is returned when there was an error
