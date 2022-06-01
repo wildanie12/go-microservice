@@ -2,13 +2,11 @@ package product
 
 import (
 	"context"
-	"fmt"
 	"net/http"
 
 	"github.com/wildanie12/go-microservice/product-service/entities/domain"
 	_domain "github.com/wildanie12/go-microservice/product-service/entities/domain"
 	_web "github.com/wildanie12/go-microservice/product-service/entities/web"
-	"github.com/wildanie12/go-microservice/product-service/utils"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
@@ -20,6 +18,8 @@ type MongoProductRepository struct {
 	mongoCtx context.Context
 }
 
+// NewMongo act as a method constructor to make 
+// MongoProductRepository struct object
 func NewMongo(mongo *mongo.Database) *MongoProductRepository {
 	return &MongoProductRepository{
 		mc: mongo.Collection("product"),
@@ -27,7 +27,9 @@ func NewMongo(mongo *mongo.Database) *MongoProductRepository {
 	}
 }
 
-func (repo MongoProductRepository) FindAll() ([]_domain.Product, error) {
+// FindAll returns product resources in an array of entity struct
+// based on a given filter and sort query parameter 
+func (repo MongoProductRepository) FindAll(filters []map[string]string) ([]_domain.Product, error) {
 	cursor, err := repo.mc.Find(repo.mongoCtx, bson.D{})
 	if err != nil {
 		return []domain.Product{}, _web.WebError{
@@ -36,22 +38,13 @@ func (repo MongoProductRepository) FindAll() ([]_domain.Product, error) {
 			ProdMessage: "Cannot get product data",
 		}
 	}
-
-	for cursor.Next(context.TODO()) {
-		var result bson.D
-		err := cursor.Decode(&result)
-		if err != nil {
-			return []domain.Product{}, _web.WebError{
-				Code: http.StatusInternalServerError,
-				DevMessage: "Mongo FindAll cussor err: " + err.Error(),
-				ProdMessage: "Cannot get product data",
-			}
-		}
-		fmt.Println(utils.JSONEncode(result))
-	}
-	return []_domain.Product{}, nil
+	products := []_domain.Product{}
+	cursor.All(repo.mongoCtx, &products)
+	return products, nil
 }
 
+// Insert will insert the given product parameter to data source
+// an error is returned when there was an error
 func (repo MongoProductRepository) Insert(product domain.Product) (_domain.Product, error) {
 	result, err := repo.mc.InsertOne(context.TODO(), product)
 	product.ID = result.InsertedID.(primitive.ObjectID).String()
