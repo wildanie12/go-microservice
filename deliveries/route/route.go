@@ -6,5 +6,6 @@ import (
 )
 
 func RegisterProductRoutes(e *echo.Echo, productHandler *_handlers.ProductHandler) {
-	e.GET("/product", productHandler.Create)
+	e.POST("/products", productHandler.Create)
+	e.GET("/products", productHandler.Index)
 }

@@ -18,15 +18,29 @@ func NewProductHandler(productService _productService.ProductServiceInterface) *
 	}
 }
 
+// Index method return 
+func (handler ProductHandler) Index(c echo.Context) error {
+	products, err := handler.productService.FindAll([]map[string]string{})
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, err)
+	}
+	return c.JSON(http.StatusOK, map[string]interface{}{
+		"status": "OK",
+		"code": http.StatusOK,
+		"data": products,
+	})
+}
 
 func (handler ProductHandler) Create(c echo.Context) error {
 
-	productReq := _web.ProductRequest {
-		Name: "Sades Lance Mouse",
-		Unit: "pcs",
-		Price: 28000,
-		Category: "Computer Accessories",
-	}
+	productReq :=_web.ProductRequest {}
+	c.Bind(&productReq)
+	// productReq := _web.ProductRequest {
+	// 	Name: "Sades Lance Mouse",
+	// 	Unit: "pcs",
+	// 	Price: 28000,
+	// 	Category: "Computer Accessories",
+	// }
 
 	productRes, err := handler.productService.Create(productReq)
 	if err != nil {
