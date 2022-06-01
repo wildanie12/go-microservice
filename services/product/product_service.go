@@ -17,6 +17,22 @@ func New(productRepository _productRepository.ProductRepositoryInterface) *Produ
 	}
 }
 
+// FindAll returns an array of product responses based on
+// defined filter parameter, 
+func (service ProductService) FindAll(filters []map[string]string) ([]_web.ProductResponse, error) {
+	products, err := service.productRepo.FindAll(filters)
+	if err != nil {
+		return []_web.ProductResponse{}, err
+	}
+
+
+	productsRes := []_web.ProductResponse{}
+	copier.Copy(&productsRes, &products)
+	return productsRes, nil
+}
+
+// Create method creates product resource with specified product request handler
+// a series of validation and business logic can happen in this method
 func (service ProductService) Create(productRequest _web.ProductRequest) (_web.ProductResponse, error) {
 
 	product := _domain.Product{}
