@@ -9,7 +9,7 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
-func NewMongoConnection(config *_config.Config) *mongo.Client {
+func NewMongoConnection(config *_config.Config) *mongo.Database {
 	dsn := fmt.Sprintf(
 		"mongodb+srv://%s:%s@%s/?retryWrites=true&w=majority",
 		config.Mongo.User,
@@ -21,5 +21,6 @@ func NewMongoConnection(config *_config.Config) *mongo.Client {
 		panic("Cannot connect to mongodb database")
 	}
 
-	return client
+	clientDB := client.Database(config.Mongo.DB)
+	return clientDB
 }
