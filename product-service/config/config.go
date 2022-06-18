@@ -20,6 +20,12 @@ type Config struct {
 		Pass string
 		DB   string
 	}
+	RabbitMQ struct {
+		User string
+		Pass string
+		Host string
+		Port string
+	}
 }
 var config *Config
 
@@ -45,6 +51,11 @@ func initConfig() *Config {
 		config.Mongo.User = "root"
 		config.Mongo.Pass = ""
 		config.Mongo.DB = "product"
+
+		config.RabbitMQ.User = "user"
+		config.RabbitMQ.Pass = "user"
+		config.RabbitMQ.Host = "localhost"
+		config.RabbitMQ.Port = "5672"
 	}
 	config.App.BaseURL = os.Getenv("APP_BASE_URL")
 	config.App.Port = os.Getenv("APP_PORT")
@@ -55,6 +66,10 @@ func initConfig() *Config {
 	config.Mongo.User = os.Getenv("MONGO_USER")
 	config.Mongo.Pass = os.Getenv("MONGO_PASS")
 	config.Mongo.DB = os.Getenv("MONGO_DB")
+	config.RabbitMQ.User = os.Getenv("RABBITMQ_USER")
+	config.RabbitMQ.Pass = os.Getenv("RABBITMQ_PASS")
+	config.RabbitMQ.Host = os.Getenv("RABBITMQ_HOST")
+	config.RabbitMQ.Port = os.Getenv("RABBITMQ_PORT")
 
 	return &config
 }
