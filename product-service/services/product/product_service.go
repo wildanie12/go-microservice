@@ -7,11 +7,13 @@ import (
 	_productRepository "github.com/wildanie12/go-microservice/product-service/repositories/product"
 )
 
+// ProductService main struct
 type ProductService struct {
-	productRepo _productRepository.ProductRepositoryInterface
+	productRepo _productRepository.RepositoryInterface
 }
 
-func New(productRepository _productRepository.ProductRepositoryInterface) *ProductService {
+// New acts as a ProductService constructor
+func New(productRepository _productRepository.RepositoryInterface) *ProductService {
 	return &ProductService{
 		productRepo: productRepository,
 	}

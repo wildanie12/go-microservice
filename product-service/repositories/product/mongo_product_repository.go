@@ -12,6 +12,7 @@ import (
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
+// MongoProductRepository main struct
 type MongoProductRepository struct {
 	mc *mongo.Collection
 	collectionName string
@@ -32,7 +33,7 @@ func NewMongo(mongo *mongo.Database) *MongoProductRepository {
 func (repo MongoProductRepository) FindAll(filters []map[string]string) ([]_domain.Product, error) {
 	cursor, err := repo.mc.Find(repo.mongoCtx, bson.D{})
 	if err != nil {
-		return []domain.Product{}, _web.WebError{
+		return []domain.Product{}, _web.Error{
 			Code: http.StatusInternalServerError,
 			DevMessage: "Mongo FindAll err: " + err.Error(),
 			ProdMessage: "Cannot get product data",

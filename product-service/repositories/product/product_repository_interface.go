@@ -2,7 +2,9 @@ package product
 
 import _domain "github.com/wildanie12/go-microservice/product-service/entities/domain"
 
-type ProductRepositoryInterface interface {
+// RepositoryInterface main interface provide
+// contracts for product resource abstraction
+type RepositoryInterface interface {
 
 	// FindAll returns product resources in an array of entity struct
 	// based on a given filter and sort query parameter 

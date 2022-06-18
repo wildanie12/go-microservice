@@ -2,7 +2,8 @@ package services
 
 import _web "github.com/wildanie12/go-microservice/product-service/entities/web"
 
-type ProductServiceInterface interface {
+// ServiceInterface provide contract for product service
+type ServiceInterface interface {
 	
 	// FindAll returns an array of product responses based on
 	// defined filter parameter, 

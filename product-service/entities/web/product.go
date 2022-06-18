@@ -1,5 +1,7 @@
 package web
 
+// ProductRequest web entity response provides
+// a schema for product request input
 type ProductRequest struct {
 	Name     string
 	Unit     string
@@ -8,6 +10,8 @@ type ProductRequest struct {
 	isActive bool
 }
 
+// ProductResponse web entity 
+// response mapper
 type ProductResponse struct {
 	ID       string
 	Name     string

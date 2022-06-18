@@ -9,6 +9,7 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
+// NewMongoConnection return new connection instance `mongo.Database` to mongodb database
 func NewMongoConnection(config *_config.Config) *mongo.Database {
 	dsn := fmt.Sprintf(
 		"mongodb+srv://%s:%s@%s/?retryWrites=true&w=majority",

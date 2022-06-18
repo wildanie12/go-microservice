@@ -10,12 +10,12 @@ import (
 
 // ProductHandler main struct
 type ProductHandler struct {
-	productService _productService.ProductServiceInterface
+	productService _productService.ServiceInterface
 }
 
 // NewProductHandler act as a constructor 
 // to return new instance of `ProductHandler`
-func NewProductHandler(productService _productService.ProductServiceInterface) *ProductHandler {
+func NewProductHandler(productService _productService.ServiceInterface) *ProductHandler {
 	return &ProductHandler{
 		productService: productService,
 	}

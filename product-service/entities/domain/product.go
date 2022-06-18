@@ -1,5 +1,7 @@
 package domain
 
+// Product main entity model
+// that used for data modeling using mongodb
 type Product struct {
 	ID       string `bson:"_id,omitempty"`
 	Name     string
