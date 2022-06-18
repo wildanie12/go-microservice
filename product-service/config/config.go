@@ -6,6 +6,8 @@ import (
 	"github.com/joho/godotenv"
 )
 
+// Config main struct to store
+// configuration based on env file
 type Config struct {
 	App struct {
 		BaseURL string
@@ -29,6 +31,8 @@ type Config struct {
 }
 var config *Config
 
+// New returns an instance of main config object
+// It will return existing config if it's already initiated
 func New() *Config {
 	if config == nil {
 		config = initConfig()
