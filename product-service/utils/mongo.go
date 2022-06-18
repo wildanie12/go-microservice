@@ -12,7 +12,7 @@ import (
 // NewMongoConnection return new connection instance `mongo.Database` to mongodb database
 func NewMongoConnection(config *_config.Config) *mongo.Database {
 	dsn := fmt.Sprintf(
-		"mongodb+srv://%s:%s@%s:%s/?retryWrites=true&w=majority",
+		"mongodb://%s:%s@%s:%s/?retryWrites=true&w=majority",
 		config.Mongo.User,
 		config.Mongo.Pass,
 		config.Mongo.Host,
