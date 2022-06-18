@@ -1,0 +1,28 @@
+version: '3'
+
+services:
+    product-service:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        container_name: product-service
+        ports:
+            - '${APP_PORT}:${APP_PORT}'
+        restart: always
+        networks:
+            - product-service-network
+
+    product-service-db:
+        image: mongo:latest
+        restart: always
+        environment:
+            - MONGO_INITDB_ROOT_USERNAME=${MONGO_USER}
+            - MONGO_INITDB_ROOT_PASSWORD=${MONGO_PASS}
+            - MONGO_INITDB_DATABASE=${MONGO_DB}
+        ports:
+            - '${MONGO_PORT}:${MONGO_PORT}'
+        networks:
+            - product-service-network
+
+networks:
+    product-service-network:
