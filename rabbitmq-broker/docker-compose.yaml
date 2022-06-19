@@ -10,6 +10,7 @@ services:
         environment:
             - RABBITMQ_DEFAULT_USER=${RABBITMQ_USER}
             - RABBITMQ_DEFAULT_PASS=${RABBITMQ_PASS}
-
+        networks:
+            - gomc-broker
 networks:
     gomc-broker:
